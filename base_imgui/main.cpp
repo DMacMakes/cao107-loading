@@ -111,8 +111,8 @@ void Show_Loader_Menu_Bar()
       ImGui::EndMenu();
     }
     ImGui::EndMenuBar();
-    //Todo: add ImGuiFileDialog files to project/library
-    //See main.cpp in ImGuiFileDialog-master in cao107_y/etc/library_downloads
+    // Todo: add ImGuiFileDialog files to project/library
+    // See main.cpp in ImGuiFileDialog-master in cao107_y/etc/library_downloads
     if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
     {
       // action if OK
