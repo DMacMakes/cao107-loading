@@ -20,6 +20,9 @@ void Init_SDL_OpenGL();
 void Destroy_SDL_OpenGL();
 void Render_Imgui(ImVec4&, ImGuiIO&);
 void Show_Another_Window(bool& show);
+void Show_Demo_Window(bool&, bool&, ImVec4&);
+void Show_Load_Window(bool& show_load);
+static void ShowExampleMenuFile();
 
 // Main code
 int main(int, char**)
@@ -29,73 +32,175 @@ int main(int, char**)
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     
     // State of interface (what's showing)
-    //bool show_demo_window = true;
+    bool show_demo_window = true;
     bool show_another_window = true;
+    bool show_load_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // Main loop
     bool done = false;
     while (!done)
     {
-        // Poll and handle events (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            ImGui_ImplSDL2_ProcessEvent(&event);
-            if (event.type == SDL_QUIT)
-                done = true;
-            if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
-                done = true;
-        }
+      // Poll and handle events (inputs, window resize, etc.)
+      // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
+      // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
+      // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
+      // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+      SDL_Event event;
+      while (SDL_PollEvent(&event))
+      {
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        if (event.type == SDL_QUIT)
+          done = true;
+        if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+          done = true;
+      }
 
-        // Start the Dear ImGui frame
-        ImGui_ImplOpenGL2_NewFrame();
-        ImGui_ImplSDL2_NewFrame(window);
-        ImGui::NewFrame();
+      // Start the Dear ImGui frame
+      ImGui_ImplOpenGL2_NewFrame();
+      ImGui_ImplSDL2_NewFrame(window);
+      ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        /*if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
+      // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+      if (show_demo_window)
+      {
+        Show_Demo_Window(show_demo_window, show_another_window, clear_color);
+      }
 
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
+      //2. Show CAO107 window 1. 
+      if (show_load_window)
+      {
+        Show_Load_Window(show_load_window);
+      }
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+      //3. Show another simple window.        
+//      if (show_another_window)
+//      {
+//        Show_Another_Window(show_another_window);
+//      }
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            ImGui::End();
-        } */
-
-        //3. Show another simple window.        
-        if (show_another_window)
-        {
-          Show_Another_Window(show_another_window);
-        }
-
-        Render_Imgui(clear_color, io);
+      Render_Imgui(clear_color, io);
     }
 
     Destroy_SDL_OpenGL();
 
     return 0;
+}
+
+void Show_Loader_Menu_Bar()
+{
+  static bool show_load_message = false;
+
+  if (ImGui::BeginMenuBar())
+  {
+    if (ImGui::BeginMenu("Menu"))
+    {
+      if (ImGui::MenuItem("Load Image files.."))
+      {
+        igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp", ".");
+        // For real, display the file browser (get library).
+        show_load_message = true;// Display the file browser
+      }
+      ImGui::MenuItem("Load Audio files..", "Ctrl+a");
+      ImGui::EndMenu();
+    }
+    if (ImGui::BeginMenu("Examples"))
+    {
+      ImGui::MenuItem("Main menu bar");
+      ImGui::MenuItem("Console");
+      ImGui::EndMenu();
+    }
+    ImGui::EndMenuBar();
+    //Todo: add ImGuiFileDialog files to project/library
+    //See main.cpp in ImGuiFileDialog-master in cao107_y/etc/library_downloads
+    if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
+    {
+      // action if OK
+      if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+      {
+        std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
+        std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
+        // action
+      }
+      // close
+      igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
+    }
+  }
+  // Display file browser
+  if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
+  {
+    // action if OK
+    if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+    {
+      std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
+      std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
+      // action
+    }
+    // close
+    igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
+  }
+  ImGui::Text("dear imgui (%s)", IMGUI_VERSION);
+  if (show_load_message)
+  {
+    ImGui::Text("File browser requested..");
+  }
+  //else
+ // {
+  //  ImGui::Text("dear imgui says hello. (%s)", IMGUI_VERSION);
+ // }
+  ImGui::Spacing();
+}
+
+void Show_Load_Window(bool& show_load)
+{
+  ImGuiWindowFlags window_flags = 0;
+ // if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
+//  if (no_scrollbar)       window_flags |= ImGuiWindowFlags_NoScrollbar;
+  window_flags |= ImGuiWindowFlags_MenuBar;
+//  if (no_move)            window_flags |= ImGuiWindowFlags_NoMove;
+ // if (no_resize)          window_flags |= ImGuiWindowFlags_NoResize;
+//  if (no_collapse)        window_flags |= ImGuiWindowFlags_NoCollapse;
+//  if (no_nav)             window_flags |= ImGuiWindowFlags_NoNav;
+//  if (no_background)      window_flags |= ImGuiWindowFlags_NoBackground;
+//  if (no_bring_to_front)  window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
+//  if (no_docking)         window_flags |= ImGuiWindowFlags_NoDocking;
+//  if (no_close)           p_open = NULL; // Don't pass our bool* to Begin
+
+  ImGui::Begin("Media Loader 2020.0.1", nullptr, window_flags);
+  Show_Loader_Menu_Bar();
+
+  //ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+  if (ImGui::Button("Close Me"))
+    show_load = false;
+  ImGui::End();
+}
+
+// Shows a window the IMGui devs have created as a demo of (all? most of?) the features imgui offers.
+void Show_Demo_Window(bool& show_demo, bool& show_another, ImVec4& clear_color)
+{
+  ImGui::ShowDemoWindow(&show_demo);
+  // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+  {
+    static float f = 0.0f;
+    static int counter = 0;
+
+    ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+    ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+    ImGui::Checkbox("Demo Window", &show_demo);      // Edit bools storing our window open/close state
+    ImGui::Checkbox("Another Window", &show_another);
+
+    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+    ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+    if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+      counter++;
+    ImGui::SameLine();
+    ImGui::Text("counter = %d", counter);
+
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    ImGui::End();
+  }
 }
 
 void Show_Another_Window(bool& show)
