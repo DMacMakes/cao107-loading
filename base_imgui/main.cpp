@@ -16,16 +16,19 @@
 SDL_Window* window = nullptr;// = SDL_CreateWindow("Dear ImGui SDL2+OpenGL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
 SDL_GLContext gl_context;// = SDL_GL_CreateContext(window);
 
-
-void initSDL();
-void cleanUp();
+void Init_SDL_OpenGL();
+void Destroy_SDL_OpenGL();
+void Render_Imgui(ImVec4&, ImGuiIO&);
+void Show_Another_Window(bool& show);
 
 // Main code
 int main(int, char**)
 {
-    initSDL();    
+    Init_SDL_OpenGL();
+    
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    // Our state
+    
+    // State of interface (what's showing)
     //bool show_demo_window = true;
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -81,45 +84,32 @@ int main(int, char**)
             ImGui::End();
         } */
 
-        // 3. Show another simple window.
+        //3. Show another simple window.        
         if (show_another_window)
         {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
+          Show_Another_Window(show_another_window);
         }
 
-        // Rendering
-        ImGui::Render();
-        glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
-        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
-        // Update and Render additional Platform Windows
-        // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
-        //  For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
-            SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
-        }
-
-        SDL_GL_SwapWindow(window);
+        Render_Imgui(clear_color, io);
     }
 
-    cleanUp();
+    Destroy_SDL_OpenGL();
 
     return 0;
 }
 
-void initSDL()
+void Show_Another_Window(bool& show)
+{
+  ImGui::Begin("Another Window", &show);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+  ImGui::Text("Hello from another window!");
+  if (ImGui::Button("Close Me"))
+    show = false;
+  ImGui::End();
+}
+// Initialise the SDL and openGL libraries to 
+// a) define and control our gui elements and
+// b) create the openGL context that renders them
+void Init_SDL_OpenGL()
 {
   // Setup SDL
     // (Some versions of SDL before <2.0.10 appears to have performance/stalling issues on a minority of Windows systems,
@@ -187,7 +177,32 @@ void initSDL()
 
 }
 
-void cleanUp()
+void Render_Imgui(ImVec4& clear_color, ImGuiIO& io)
+{
+  // Rendering
+  ImGui::Render();
+  glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+  glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+  glClear(GL_COLOR_BUFFER_BIT);
+  //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
+  ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+  // Update and Render additional Platform Windows
+  // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+  //  For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
+  if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+  {
+    SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+    SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault();
+    SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+  }
+
+  SDL_GL_SwapWindow(window);
+}
+
+void Destroy_SDL_OpenGL()
 {
   // Cleanup
   ImGui_ImplOpenGL2_Shutdown();
