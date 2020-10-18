@@ -16,13 +16,13 @@
 
 EXE = baseImgui
 SOURCES = main.cpp
-SOURCE += ../../libraries_cpp/ImGuiFileDialog/ImGuiFileDialog.cpp
+#SOURCES += ../../libraries_cpp/ImGuiFileDialog/ImGuiFileDialog.cpp
 SOURCES += ../../libraries_cpp/dear_imgui/examples/imgui_impl_sdl.cpp ../../libraries_cpp/dear_imgui/examples/imgui_impl_opengl2.cpp
-SOURCES += ../../libraries_cpp/dear_imgui/imgui.cpp ../../libraries_cpp/dear_imgui/imgui_demo.cpp ../../libraries_cpp/dear_imgui/imgui_draw.cpp ../../libraries_cpp/dear_imgui/imgui_widgets.cpp
+SOURCES += ../../libraries_cpp/dear_imgui/imgui.cpp ../../libraries_cpp/dear_imgui/imgui_demo.cpp ../../libraries_cpp/dear_imgui/imgui_draw.cpp ../../libraries_cpp/dear_imgui/imgui_widgets.cpp ../../libraries_cpp/IMGuiFileDialog/ImGuiFileDialog.cpp
 OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
 UNAME_S := $(shell uname -s)
 
-CXXFLAGS = -I../../libraries_cpp/dear_imgui/examples/ -I../../libraries_cpp/dear_imgui/ -I../../libraries_cpp/ImGuiFileDialog -I.
+CXXFLAGS = -I../../libraries_cpp/dear_imgui/examples/ -I../../libraries_cpp/dear_imgui/ -I../../libraries_cpp/ImGuiFileDialog/ -I.
 CXXFLAGS += -g -Wall -Wformat
 LIBS =
 
@@ -73,6 +73,9 @@ endif
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 %.o:../../libraries_cpp/dear_imgui/examples/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+%.o:../../libraries_cpp/ImGuiFileDialog/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 all: $(EXE)
