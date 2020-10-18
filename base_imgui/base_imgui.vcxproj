@@ -90,11 +90,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\libraries\sdl2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries_cpp\sdl2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\libraries\sdl2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\libraries_cpp\sdl2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
@@ -104,11 +104,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\libraries\sdl2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries_cpp\sdl2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\libraries\sdl2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\libraries_cpp\sdl2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
@@ -120,14 +120,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\libraries\ImGuiFileDialog;..\..\libraries\dirent;..\..\libraries\sdl2\include;..\..\libraries\dear_imgui;..\..\libraries\dear_imgui\examples\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries_cpp\ImGuiFileDialog;..\..\libraries_cpp\dirent;..\..\libraries_cpp\sdl2\include;..\..\libraries_cpp\dear_imgui;..\..\libraries_cpp\dear_imgui\examples\</AdditionalIncludeDirectories>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\libraries\sdl2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\libraries_cpp\sdl2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>
@@ -140,14 +140,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\libraries\sdl2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries_cpp\sdl2\include</AdditionalIncludeDirectories>
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\libraries\sdl2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\libraries_cpp\sdl2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>
@@ -155,27 +155,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui.cpp" />
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui_widgets.cpp" />
-    <ClCompile Include="..\..\libraries\dear_imgui\examples\imgui_impl_opengl2.cpp" />
-    <ClCompile Include="..\..\libraries\dear_imgui\examples\imgui_impl_sdl.cpp" />
-    <ClCompile Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialog.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_sdl.cpp" />
+    <ClCompile Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialog.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\libraries\dear_imgui\imconfig.h" />
-    <ClInclude Include="..\..\libraries\dear_imgui\imgui.h" />
-    <ClInclude Include="..\..\libraries\dear_imgui\imgui_internal.h" />
-    <ClInclude Include="..\..\libraries\dear_imgui\examples\imgui_impl_opengl2.h" />
-    <ClInclude Include="..\..\libraries\dear_imgui\examples\imgui_impl_sdl.h" />
-    <ClInclude Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialog.h" />
-    <ClInclude Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\imconfig.h" />
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\imgui.h" />
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_opengl2.h" />
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_sdl.h" />
+    <ClInclude Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialog.h" />
+    <ClInclude Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\libraries\dear_imgui\misc\natvis\imgui.natvis" />
-    <None Include="..\..\libraries\dear_imgui\examples\README.txt" />
+    <None Include="..\..\libraries_cpp\dear_imgui\misc\natvis\imgui.natvis" />
+    <None Include="..\..\libraries_cpp\dear_imgui\examples\README.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

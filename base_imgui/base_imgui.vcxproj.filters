@@ -10,57 +10,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui.cpp">
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui_demo.cpp">
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_demo.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui_draw.cpp">
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_draw.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries\dear_imgui\examples\imgui_impl_sdl.cpp">
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_sdl.cpp">
       <Filter>sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries\dear_imgui\examples\imgui_impl_opengl2.cpp">
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_opengl2.cpp">
       <Filter>sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries\dear_imgui\imgui_widgets.cpp">
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialog.cpp">
+    <ClCompile Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialog.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\libraries\dear_imgui\imconfig.h">
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries\dear_imgui\imgui.h">
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\imgui.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries\dear_imgui\imgui_internal.h">
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries\dear_imgui\examples\imgui_impl_opengl2.h">
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_opengl2.h">
       <Filter>sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries\dear_imgui\examples\imgui_impl_sdl.h">
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_sdl.h">
       <Filter>sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialog.h">
+    <ClInclude Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialog.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialogConfig.h">
+    <ClInclude Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialogConfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\libraries\dear_imgui\examples\README.txt" />
-    <None Include="..\..\libraries\dear_imgui\misc\natvis\imgui.natvis">
+    <None Include="..\..\libraries_cpp\dear_imgui\examples\README.txt" />
+    <None Include="..\..\libraries_cpp\dear_imgui\misc\natvis\imgui.natvis">
       <Filter>sources</Filter>
     </None>
   </ItemGroup>
