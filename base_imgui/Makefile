@@ -16,12 +16,13 @@
 
 EXE = baseImgui
 SOURCES = main.cpp
+SOURCE += ../../libraries/ImGuiFileDialog/ImGuiFileDialog.cpp
 SOURCES += ../../libraries/dear_imgui/examples/imgui_impl_sdl.cpp ../../libraries/dear_imgui/examples/imgui_impl_opengl2.cpp
 SOURCES += ../../libraries/dear_imgui/imgui.cpp ../../libraries/dear_imgui/imgui_demo.cpp ../../libraries/dear_imgui/imgui_draw.cpp ../../libraries/dear_imgui/imgui_widgets.cpp
 OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
 UNAME_S := $(shell uname -s)
 
-CXXFLAGS = -I../../libraries/dear_imgui/examples/ -I../../libraries/dear_imgui/ -I.
+CXXFLAGS = -I../../libraries/dear_imgui/examples/ -I../../libraries/dear_imgui/ -I../../libraries/ImGuiFileDialog -I.
 CXXFLAGS += -g -Wall -Wformat
 LIBS =
 

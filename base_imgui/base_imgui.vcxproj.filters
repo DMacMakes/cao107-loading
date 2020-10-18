@@ -31,6 +31,9 @@
     <ClCompile Include="..\..\libraries\dear_imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialog.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\libraries\dear_imgui\imconfig.h">
@@ -47,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="..\..\libraries\dear_imgui\examples\imgui_impl_sdl.h">
       <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialog.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libraries\ImGuiFileDialog\ImGuiFileDialogConfig.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

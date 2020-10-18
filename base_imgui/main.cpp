@@ -7,12 +7,18 @@
 // See imgui_impl_sdl.cpp for details.
 
 #include "imgui.h"
+#ifndef IMGUI_DEFINE_MATH_OPERATORS
+#define IMGUI_DEFINE_MATH_OPERATORS
+#endif
+#include <string>
+#include "imgui_internal.h"
+#include "imgui.h"
 #include "imgui_impl_opengl2.h"
 #include "imgui_impl_sdl.h"
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
-
+#include "ImGuiFileDialog.h"
 SDL_Window* window = nullptr;// = SDL_CreateWindow("Dear ImGui SDL2+OpenGL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
 SDL_GLContext gl_context;// = SDL_GL_CreateContext(window);
 
@@ -21,8 +27,7 @@ void Destroy_SDL_OpenGL();
 void Render_Imgui(ImVec4&, ImGuiIO&);
 void Show_Another_Window(bool& show);
 void Show_Demo_Window(bool&, bool&, ImVec4&);
-void Show_Load_Window(bool& show_load);
-static void ShowExampleMenuFile();
+void Show_Load_Window(bool& show_load, bool& show_demo, bool& done);
 
 // Main code
 int main(int, char**)
@@ -32,8 +37,8 @@ int main(int, char**)
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     
     // State of interface (what's showing)
-    bool show_demo_window = true;
-    bool show_another_window = true;
+    bool show_demo_window = false;
+    bool show_another_window = false;
     bool show_load_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -70,7 +75,7 @@ int main(int, char**)
       //2. Show CAO107 window 1. 
       if (show_load_window)
       {
-        Show_Load_Window(show_load_window);
+        Show_Load_Window(show_load_window, show_demo_window, done);
       }
 
       //3. Show another simple window.        
@@ -87,32 +92,38 @@ int main(int, char**)
     return 0;
 }
 
-void Show_Loader_Menu_Bar()
+void Show_Loader_Menu_Bar(bool& done)
 {
   static bool show_load_message = false;
-
+  static bool path_was_chosen = false;
+  static std::string path = "";
   if (ImGui::BeginMenuBar())
   {
-    if (ImGui::BeginMenu("Menu"))
+    if (ImGui::BeginMenu("File"))
     {
-      if (ImGui::MenuItem("Load Image files.."))
+      if (ImGui::MenuItem("Load images.."))
       {
         igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".cpp,.h,.hpp", ".");
         // For real, display the file browser (get library).
         show_load_message = true;// Display the file browser
       }
-      ImGui::MenuItem("Load Audio files..", "Ctrl+a");
+      ImGui::MenuItem("Load sounds..");
+      ImGui::MenuItem("------");
+      if (ImGui::MenuItem("Quit"))
+      {
+        done = true;
+      }
       ImGui::EndMenu();
     }
-    if (ImGui::BeginMenu("Examples"))
+    if (ImGui::BeginMenu("Help"))
     {
-      ImGui::MenuItem("Main menu bar");
-      ImGui::MenuItem("Console");
+      ImGui::MenuItem("Help yoself");
       ImGui::EndMenu();
     }
     ImGui::EndMenuBar();
     // Todo: add ImGuiFileDialog files to project/library
     // See main.cpp in ImGuiFileDialog-master in cao107_y/etc/library_downloads
+  // Display file browser
     if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
     {
       // action if OK
@@ -121,37 +132,30 @@ void Show_Loader_Menu_Bar()
         std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
         std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
         // action
+        path_was_chosen = true;
+        path = filePath;
       }
       // close
       igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
     }
-  }
-  // Display file browser
-  if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseFileDlgKey"))
-  {
-    // action if OK
-    if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+    ImGui::Text("dear imgui (%s)", IMGUI_VERSION);
+    if (show_load_message)
     {
-      std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
-      std::string filePath = igfd::ImGuiFileDialog::Instance()->GetCurrentPath();
-      // action
+      ImGui::Text("File browser requested..");
     }
-    // close
-    igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseFileDlgKey");
+    if (path_was_chosen)
+    {
+      ImGui::Text("Path %s: ", path);
+    }
+    //else
+   // {
+    //  ImGui::Text("dear imgui says hello. (%s)", IMGUI_VERSION);
+   // }
   }
-  ImGui::Text("dear imgui (%s)", IMGUI_VERSION);
-  if (show_load_message)
-  {
-    ImGui::Text("File browser requested..");
-  }
-  //else
- // {
-  //  ImGui::Text("dear imgui says hello. (%s)", IMGUI_VERSION);
- // }
   ImGui::Spacing();
 }
 
-void Show_Load_Window(bool& show_load)
+void Show_Load_Window(bool& show_load, bool& show_demo, bool& done)
 {
   ImGuiWindowFlags window_flags = 0;
  // if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
@@ -167,11 +171,13 @@ void Show_Load_Window(bool& show_load)
 //  if (no_close)           p_open = NULL; // Don't pass our bool* to Begin
 
   ImGui::Begin("Media Loader 2020.0.1", nullptr, window_flags);
-  Show_Loader_Menu_Bar();
+  Show_Loader_Menu_Bar(done);
 
   //ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-  if (ImGui::Button("Close Me"))
-    show_load = false;
+  if (ImGui::Button("Show Demo Window"))
+    show_demo = true;
+    //show_load = false;
+
   ImGui::End();
 }
 
