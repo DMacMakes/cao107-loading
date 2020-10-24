@@ -14,8 +14,8 @@
 #CXX = g++
 #CXX = clang++
 
-EXE = baseImgui
-SOURCES = main.cpp
+EXE = imgui_loader
+SOURCES = main.cpp dmgui.cpp
 #SOURCES += ../../libraries_cpp/ImGuiFileDialog/ImGuiFileDialog.cpp
 SOURCES += ../../libraries_cpp/dear_imgui/examples/imgui_impl_sdl.cpp ../../libraries_cpp/dear_imgui/examples/imgui_impl_opengl2.cpp
 SOURCES += ../../libraries_cpp/dear_imgui/imgui.cpp ../../libraries_cpp/dear_imgui/imgui_demo.cpp ../../libraries_cpp/dear_imgui/imgui_draw.cpp ../../libraries_cpp/dear_imgui/imgui_widgets.cpp ../../libraries_cpp/IMGuiFileDialog/ImGuiFileDialog.cpp
@@ -24,7 +24,7 @@ UNAME_S := $(shell uname -s)
 
 CXXFLAGS = -I../../libraries_cpp/dear_imgui/examples/ -I../../libraries_cpp/dear_imgui/ -I../../libraries_cpp/ImGuiFileDialog/ -I.
 # -I../../libraries_cpp/sdl2/include/ -I.
-CXXFLAGS += -g -Wall -Wformat -m64
+CXXFLAGS += -g -std=c++17 -Wall -Wformat 
 LIBS =
 
 ##---------------------------------------------------------------------
@@ -51,7 +51,7 @@ endif
 
 ifeq ($(findstring MINGW,$(UNAME_S)),MINGW)
 	ECHO_MESSAGE = "MinGW"
-	LIBS += -lgdi32 -lopengl32 -limm32 `pkg-config --static --libs sdl2`
+	LIBS += -lgdi32 -lopengl32 -limm32 `pkg-config --static --libs sdl2 -lSDL2_image`
 
 	CXXFLAGS += `pkg-config --cflags sdl2`
 	CFLAGS = $(CXXFLAGS)

@@ -25,5 +25,5 @@ namespace DmGui
     bool isVisible {true};
   };
 
-  std::string Load_Image_To_GLuint_Texture(std::string& path, DmGui::ImageTexture& image_texture);
+  std::string Load_Image_To_GLuint_Texture(std::string path, DmGui::ImageTexture& image_texture);
 }

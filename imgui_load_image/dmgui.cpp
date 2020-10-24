@@ -6,7 +6,7 @@ using cimg_library::cimg::nearest_pow2;
 
 namespace DmGui
 {
-  std::string Load_Image_To_GLuint_Texture(std::string& path, DmGui::ImageTexture& image_texture) // int& width, int& height)
+  std::string Load_Image_To_GLuint_Texture(std::string path, DmGui::ImageTexture& image_texture) // int& width, int& height)
   {
     SDL_Surface* image = nullptr;
     image = IMG_Load(path.c_str());
