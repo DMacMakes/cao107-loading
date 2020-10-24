@@ -351,3 +351,6 @@ MigrationBackup/
 
 /*/*.o
 base_imgui/baseImgui
+
+folder*.ico
+desktop.ini
