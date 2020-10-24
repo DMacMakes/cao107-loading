@@ -24,6 +24,9 @@ namespace DmGui
     std::string error;
     bool isVisible {true};
   };
-
+  
+  // Takes a path to an image and (a reference to) and loads it using SDL2_image.
+  // It converts the result to an Open GL 2D texture and puts the id etc into
+  // the DmGui ImageTexture you supply. 
   std::string Load_Image_To_GLuint_Texture(std::string path, DmGui::ImageTexture& image_texture);
 }
