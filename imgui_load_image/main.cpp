@@ -7,7 +7,7 @@
 #endif  
 #include <iostream>
 #include <string>
-#include <vector>;
+#include <vector>
 #include <assert.h>
 #include "imgui_internal.h"
 #include "imgui.h"
@@ -18,9 +18,8 @@
 #include <SDL_opengl.h>
 #include "ImGuiFileDialog.h"
 #include "CImg.h"
-//#include "SDL_image.h" 
 #include <SDL_image.h>
-#include "dmgui.h";
+#include "dmgui.h"
 using cimg_library::cimg::nearest_pow2;
 
 // Global variables to allow access to the window and gL_context from create and destroy funcs 
@@ -29,11 +28,16 @@ SDL_Window* window = nullptr;
 SDL_GLContext gl_context;
 // = SDL_GL_CreateContext(window);
 
+// Declare functions to handle the librares
 void Init_SDL_OpenGL();
 void Destroy_SDL_OpenGL();
 void Render_Imgui(ImVec4&, ImGuiIO&);
+
+// Functions related to our app - demo window for reference, load window for our 
+// assessment requirements
 void Show_Demo_Window(bool&, ImVec4&);
-void Show_Load_Window(bool& show_load, bool& show_demo, bool& done, std::string image_error, int initted);
+void Show_Load_Window(bool& show_load, bool& show_demo, bool& done, 
+                      std::string image_error, int initted);
 // Main code
 
 int main(int, char**)
@@ -41,7 +45,7 @@ int main(int, char**)
     Init_SDL_OpenGL();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     
-    // Initialise SDL image loader
+    // Supported image formats 
     int flags=IMG_INIT_JPG|IMG_INIT_PNG;
     int initted=IMG_Init(flags);
     
@@ -50,6 +54,8 @@ int main(int, char**)
     DmGui::ImageTexture image_texture;
     image_texture.error = DmGui::Load_Image_To_GLuint_Texture(std::string("image1.png"), image_texture);
 
+    // We need booleans to track the opened/closed state of our main windows
+    // For image windows I recommend using the isVisible bool inside an ImageTexture.
     bool show_demo_window = false;
     bool show_load_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -87,6 +93,7 @@ int main(int, char**)
       }
 
       //3. Show each loaded image in its own window.
+      //Todo: Here's where you'll loop through the visible images and draw the window for each.
 
       // So far we've just been telling imgui what to paint on screen.
       // Now we ask it to paint it all to the screen at once (one screen draw per frame)
@@ -121,6 +128,9 @@ void Show_Loader_Menu_Bar(bool& done)
         igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseSoundDlgKey", "Choose sound", ".cpp,.c,.h", ".");
         show_load_message = true;// Display the file browser
       }
+
+      //Todo: How about those extra threading options? See the week 6 homework brief.
+
       if (ImGui::MenuItem("Quit"))
       {
         done = true;
@@ -133,7 +143,9 @@ void Show_Loader_Menu_Bar(bool& done)
       ImGui::EndMenu();
     }
     ImGui::EndMenuBar();
-  // Display file browser
+
+    // If Load images.. was clicked, this runs when people click a buton:
+    // If "ok" , it gets the paths available. If "cancel" it closes.
     if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseImageDlgKey"))
     {
       // action if OK
@@ -149,7 +161,8 @@ void Show_Loader_Menu_Bar(bool& done)
       // close
       igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseImageDlgKey");
     }
-
+    
+    // Same same for Load sounds..
     if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseSoundDlgKey"))
     {
       // action if OK
@@ -164,6 +177,10 @@ void Show_Loader_Menu_Bar(bool& done)
       // close
       igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseSoundDlgKey");
     }
+
+    // Some output for debugging purposes.. basically checking things are working
+    // by printing results. %s stands for string but really means a c string (char* myString[])
+    // Use the c_str() function provided by the <string> type for conversion 
     ImGui::Text("dear imgui (%s)", IMGUI_VERSION);
     if (show_load_message)
     {
@@ -182,27 +199,24 @@ void Show_Loader_Menu_Bar(bool& done)
 void Show_Load_Window(bool& show_load, bool& show_demo, bool& done, std::string image_error, int initted)
 {
   ImGuiWindowFlags window_flags = 0;
- // if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
+//  if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
 //  if (no_scrollbar)       window_flags |= ImGuiWindowFlags_NoScrollbar;
   window_flags |= ImGuiWindowFlags_MenuBar;
 //  if (no_move)            window_flags |= ImGuiWindowFlags_NoMove;
-  // window_flags |= ImGuiWindowFlags_NoResize;
-  //  if (no_collapse)        window_flags |= ImGuiWindowFlags_NoCollapse;
+//  window_flags |= ImGuiWindowFlags_NoResize;
+//  if (no_collapse)        window_flags |= ImGuiWindowFlags_NoCollapse;
 //  if (no_nav)             window_flags |= ImGuiWindowFlags_NoNav;
 //  if (no_background)      window_flags |= ImGuiWindowFlags_NoBackground;
 //  if (no_bring_to_front)  window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
 //  if (no_docking)         window_flags |= ImGuiWindowFlags_NoDocking;
 //  if (no_close)           p_open = NULL; // Don't pass our bool* to Begin
 
-  ImGui::Begin("Media Loader 2020.0.1", nullptr, window_flags);
+  ImGui::Begin("Media Loader 2020.0.1", &show_load, window_flags);
   Show_Loader_Menu_Bar(done);
 
-  ImGui::Text("sdl image initted %d", initted);
+  //ImGui::Text("sdl image initted %d", initted);
   ImGui::Text("Image error %s", image_error.c_str());
-  //ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
   if (ImGui::Button("Show Demo Window")) show_demo = true;
-    //show_load = false;
-
   ImGui::End();
 }
 
