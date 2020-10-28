@@ -12,17 +12,22 @@
 #include <SDL_opengl.h>
 #include <string>
 
-
-
 namespace DmGui 
 {
   struct ImageTexture
   {
     GLuint texture_id{0};
-    int width{0};
-    int height{0};
+    int width {0};
+    int height {0};
     std::string error;
+    std::string path_name;
     bool isVisible {true};
+  };
+
+  struct LoadOptions
+  {
+    bool thread {false};
+    bool multiple_threads {false};
   };
   
   // Takes a path to an image and (a reference to) and loads it using SDL2_image.

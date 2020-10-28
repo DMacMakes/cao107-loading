@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "../libraries_cpp/dear_imgui",
+                "../libraries_cpp/dear_imgui/examples",
+                "../libraries_cpp/ImGuiFileDialog",
+                "../libraries_cpp/sdl2/include/"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang++",
+            "compilerArgs": [
+              "-lSDL2", 
+              "-lSDL2_image"
+            ], 
+            "intelliSenseMode": "clang-x64",
+            "cppStandard": "c++17",
+            "browse": {
+              "path": ["../libraries_cpp/"]
+            }
+        }
+    ],
+    "version": 4
+}
