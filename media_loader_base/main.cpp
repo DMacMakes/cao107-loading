@@ -42,7 +42,6 @@ int main(int, char**)
 {
     Init_SDL_OpenGL();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    
     // Supported image formats 
     int flags=IMG_INIT_JPG|IMG_INIT_PNG;
     int initted=IMG_Init(flags);
@@ -67,41 +66,26 @@ int main(int, char**)
       while (SDL_PollEvent(&event))
       {
         ImGui_ImplSDL2_ProcessEvent(&event);
-        if (event.type == SDL_QUIT)
-          done = true;
+        if (event.type == SDL_QUIT) done = true;
         if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
           done = true;
       }
-
       // Start the Dear ImGui frame - as in frames per second, not window-frame
       ImGui_ImplOpenGL2_NewFrame();
       ImGui_ImplSDL2_NewFrame(window);
       ImGui::NewFrame();
-
       // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-      if (show_demo_window)
-      {
-        Show_Demo_Window(show_demo_window, clear_color);
-      }
+      if (show_demo_window) Show_Demo_Window(show_demo_window, clear_color);
 
       //2. Show CAO107 media loader window, the core of our assessment.  
-      if (show_load_window)
-      {
-        Show_Load_Window(show_load_window, show_demo_window, done, image);
-      }
+      if (show_load_window) Show_Load_Window(show_load_window, show_demo_window, done, image);
 
       //3. Show each loaded image in its own window.
       //Todo: Here's where you'll loop through the visible images and draw the window for each.
 
-      // So far we've just been telling imgui what to paint on screen.
-      // Now we ask it to paint it all to the screen at once (one screen draw per frame)
-      Render_Imgui(clear_color, io);
+      Render_Imgui(clear_color, io);  // Draw everything to screen
     }
-
-    // Clean up all the SDL and OpenGL stuff in memory
-    Destroy_SDL_OpenGL();
-
-    return 0;
+    Destroy_SDL_OpenGL();  // Clean up all the SDL and OpenGL stuff in memory
 }
 
 void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture& image)
@@ -110,8 +94,6 @@ void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture
   window_flags |= ImGuiWindowFlags_MenuBar; // Display a menu bar
 
   ImGui::Begin("Media Loader 2020.0.1", &show_load, window_flags);
-
-  bool path_was_chosen = false;
   if (ImGui::BeginMenuBar())
   {
     if (ImGui::BeginMenu("File"))
@@ -120,19 +102,14 @@ void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture
       {
         igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseImageDlgKey", "Choose image", ".cpp,.c,.h", ".");
         // For real, display the file browser (get library).
-        //show_load_message = true;// Display the file browser
       }
       if (ImGui::MenuItem("Load sounds..")) // Do things if clicked;
       {
         igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseSoundDlgKey", "Choose sound", ".cpp,.c,.h", ".");
-        //show_load_message = true;// Display the file browser
       }
       //TODO: How about those extra threading options? See the week 6 homework brief.
 
-      if (ImGui::MenuItem("Quit"))
-      {
-        quit = true;
-      }
+      if (ImGui::MenuItem("Quit")) quit = true;
       ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Help"))
@@ -147,7 +124,6 @@ void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture
   // If "ok" , it gets the paths available. If "cancel" it closes.
   if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseImageDlgKey"))
   {
-    // action if OK
     if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
     {
       image.path_name = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
@@ -169,20 +145,15 @@ void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture
   }
 
   ImGui::Spacing();
-
-  if (ImGui::Button("Show Demo Window"))
-    show_demo = true;
-
+  if (ImGui::Button("Show Demo Window")) show_demo = true;
   ImGui::Spacing();
   // TODO: Instead of just showing this info below, show the real image
   // if you've loaded it. Look into ImGui::Image()
   if (!image.path_name.empty())
   {
     ImGui::Text("Pathname: %s", image.path_name.c_str());
-    if (!image.error.empty())
-    {
+    if (!image.error.empty()) 
       ImGui::Text("Image load error: %s", image.error.c_str());
-    }
   }
   ImGui::End();
 }
@@ -196,10 +167,8 @@ void Show_Demo_Window(bool& show_demo, ImVec4& clear_color)
     static int counter = 0;
 
     ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
     ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
     ImGui::Checkbox("Demo Window", &show_demo);      // Edit bools storing our window open/close state
-
     ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
     ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
@@ -207,7 +176,6 @@ void Show_Demo_Window(bool& show_demo, ImVec4& clear_color)
       counter++;
     ImGui::SameLine();
     ImGui::Text("counter = %d", counter);
-
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImGui::End();
   }

@@ -14,7 +14,7 @@
 #CXX = g++
 #CXX = clang++
 
-EXE = imgui_loader
+EXE = media_loader_base
 SOURCES = main.cpp dmgui.cpp
 #SOURCES += ../../libraries_cpp/ImGuiFileDialog/ImGuiFileDialog.cpp
 SOURCES += ../../libraries_cpp/dear_imgui/examples/imgui_impl_sdl.cpp ../../libraries_cpp/dear_imgui/examples/imgui_impl_opengl2.cpp
