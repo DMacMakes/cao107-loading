@@ -86,6 +86,7 @@ int main(int, char**)
       Render_Imgui(clear_color, io);  // Draw everything to screen
     }
     Destroy_SDL_OpenGL();  // Clean up all the SDL and OpenGL stuff in memory
+    return 0;
 }
 
 void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture& image)

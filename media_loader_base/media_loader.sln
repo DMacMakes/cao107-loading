@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui_load_image", "imgui_load_image.vcxproj", "{2AE17FDE-F7F3-4CAC-ADAB-0710EDA4F741}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "media_loader", "media_loader.vcxproj", "{2AE17FDE-F7F3-4CAC-ADAB-0710EDA4F741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
