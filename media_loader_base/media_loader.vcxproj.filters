@@ -25,12 +25,6 @@
     <ClCompile Include="main.cpp">
       <Filter>sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_sdl.cpp">
-      <Filter>sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_opengl2.cpp">
-      <Filter>sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -39,6 +33,18 @@
     </ClCompile>
     <ClCompile Include="dmgui.cpp">
       <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\backends\imgui_impl_opengl2.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\backends\imgui_impl_sdl.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libraries_cpp\dear_imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,23 +57,20 @@
     <ClInclude Include="..\..\libraries_cpp\dear_imgui\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_opengl2.h">
-      <Filter>sources</Filter>
+    <ClInclude Include="CImg.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\libraries_cpp\dear_imgui\examples\imgui_impl_sdl.h">
-      <Filter>sources</Filter>
+    <ClInclude Include="dmgui.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libraries_cpp\dear_imgui\backends\imgui_impl_sdl.h">
+      <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialog.h">
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\libraries_cpp\ImGuiFileDialog\ImGuiFileDialogConfig.h">
       <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="CImg.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="dmgui.h">
-      <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

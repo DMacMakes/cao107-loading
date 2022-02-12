@@ -1,7 +1,7 @@
 // dear imgui: standalone example application for SDL2 + OpenGL
 // If you are new to dear imgui, see examples/README.txt and documentation at the top of imgui.cpp.
 // (SDL is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
-#include "imgui.h"
+//#include "imgui.h"
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif  
@@ -14,8 +14,8 @@
 #include "imgui.h"
 #include "imgui_impl_opengl2.h"
 #include "imgui_impl_sdl.h"
-#include "ImGuiFileDialog.h"
 #include "dmgui.h"
+#include "ImGuiFileDialog.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_image.h>
@@ -101,13 +101,14 @@ void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture
     {
       if (ImGui::MenuItem("Load images.."))
       {
-        igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseImageDlgKey", "Choose image", ".cpp,.c,.h", ".");
+        IGFD::FileDialog::Instance()->OpenDialog("ChooseImageDlgKey", "Choose image", ".cpp,.c,.h", ".");
         // For real, display the file browser (get library).
       }
-      if (ImGui::MenuItem("Load sounds..")) // Do things if clicked;
+      /* if (ImGui::MenuItem("Load sounds..")) // Do things if clicked;
       {
-        igfd::ImGuiFileDialog::Instance()->OpenDialog("ChooseSoundDlgKey", "Choose sound", ".cpp,.c,.h", ".");
+        IGFD::FileDialog::Instance()->OpenDialog("ChooseSoundDlgKey", "Choose sound", ".cpp,.c,.h", ".");
       }
+      */
       //TODO: How about those extra threading options? See the week 6 homework brief.
 
       if (ImGui::MenuItem("Quit")) quit = true;
@@ -123,28 +124,28 @@ void Show_Load_Window(bool& show_load, bool& show_demo, bool& quit, ImageTexture
   
   // If Load images.. was clicked, this runs when people click a buton:
   // If "ok" , it gets the paths available. If "cancel" it closes.
-  if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseImageDlgKey"))
+  if (ImGuiFileDialog::Instance()->Display("ChooseImageDlgKey"))
   {
-    if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+    if (ImGuiFileDialog::FileDialog::Instance()->IsOk())
     {
-      image.path_name = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
+      image.path_name = ImGuiFileDialog::Instance()->GetFilePathName();
       // TODO: Load the image
     }
     // close
-    igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseImageDlgKey");
+    ImGuiFileDialog::Instance()->Close();
   }
 
-  // Same same for Load sounds..
-  if (igfd::ImGuiFileDialog::Instance()->FileDialog("ChooseSoundDlgKey"))
+  /* // Same same for Load sounds..
+  if (ImGuiFileDialog::Instance()->Display("ChooseSoundDlgKey"))
   {
     // action if OK
-    if (igfd::ImGuiFileDialog::Instance()->IsOk == true)
+    if (ImGuiFileDialog::Instance()->IsOk() == true)
     {
     }
     // close
-    igfd::ImGuiFileDialog::Instance()->CloseDialog("ChooseSoundDlgKey");
+    ImGuiFileDialog::Instance()->Close();
   }
-
+  */
   ImGui::Spacing();
   if (ImGui::Button("Show Demo Window")) show_demo = true;
   ImGui::Spacing();
